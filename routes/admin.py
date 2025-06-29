@@ -1,5 +1,4 @@
-from flask import Blueprint, request, jsonify, session, current_app
-from werkzeug.security import check_password_hash
+from flask import Blueprint, request, jsonify, session, current_app, render_template, redirect
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
@@ -7,29 +6,16 @@ admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 def is_admin():
     return session.get('is_admin', False)
 
-# --- Admin Login ---
-@admin_bp.route('/login', methods=['POST'])
-def admin_login():
-    data = request.get_json()
-    username = data.get('username')
-    password = data.get('password')
-    mysql = current_app.config['MYSQL']
-
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT user_id, password_hash, is_admin FROM users WHERE username = %s", (username,))
-    user = cur.fetchone()
-    cur.close()
-
-    if user and check_password_hash(user[1], password) and user[2]:
-        session['user_id'] = user[0]
-        session['is_admin'] = True
-        return jsonify({'message': 'Admin login successful!'}), 200
-    else:
-        return jsonify({'error': 'Invalid credentials or not an admin'}), 401
-
-# --- Admin Dashboard Stats ---
+# --- Admin Dashboard Page ---
 @admin_bp.route('/dashboard', methods=['GET'])
 def admin_dashboard():
+    if not is_admin():
+        return redirect('/login')
+    return render_template('admin_dashboard.html')
+
+# --- Dashboard Stats ---
+@admin_bp.route('/dashboard/data', methods=['GET'])
+def dashboard_data():
     if not is_admin():
         return jsonify({'error': 'Unauthorized'}), 401
 
@@ -52,7 +38,7 @@ def admin_dashboard():
         'total_balance': total_balance
     }), 200
 
-# --- Get All Users ---
+# --- List Users ---
 @admin_bp.route('/users', methods=['GET'])
 def get_users():
     if not is_admin():
@@ -60,21 +46,22 @@ def get_users():
 
     mysql = current_app.config['MYSQL']
     cur = mysql.connection.cursor()
-    cur.execute("SELECT user_id, username, email, created_at, is_admin FROM users")
+    cur.execute("SELECT user_id, username, email, created_at, is_admin, is_blocked FROM users")
     users = [
         {
             'user_id': row[0],
             'username': row[1],
             'email': row[2],
             'joined': row[3].strftime('%Y-%m-%d'),
-            'is_admin': bool(row[4])
+            'is_admin': bool(row[4]),
+            'is_blocked': bool(row[5])
         }
         for row in cur.fetchall()
     ]
     cur.close()
     return jsonify({'users': users}), 200
 
-# --- Get Recent Transactions ---
+# --- List Recent Transactions ---
 @admin_bp.route('/transactions', methods=['GET'])
 def get_transactions():
     if not is_admin():
@@ -104,7 +91,7 @@ def get_transactions():
     cur.close()
     return jsonify({'transactions': txns}), 200
 
-# --- Block/Unblock User Example ---
+# --- Block/Unblock User ---
 @admin_bp.route('/users/<int:user_id>/block', methods=['POST'])
 def block_user(user_id):
     if not is_admin():
@@ -135,3 +122,28 @@ def admin_logout():
     session.pop('user_id', None)
     session.pop('is_admin', None)
     return jsonify({'message': 'Admin logged out.'}), 200
+
+# --- (Optional) Admin Login (POST /admin/login) ---
+@admin_bp.route('/login', methods=['POST'])
+def admin_login():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+    mysql = current_app.config['MYSQL']
+
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT user_id, password_hash, is_admin FROM users WHERE username = %s", (username,))
+    user = cur.fetchone()
+    cur.close()
+
+    from werkzeug.security import check_password_hash
+    if user and check_password_hash(user[1], password) and user[2]:
+        session['user_id'] = user[0]
+        session['is_admin'] = True
+        return jsonify({'message': 'Admin login successful!'}), 200
+    else:
+        return jsonify({'error': 'Invalid credentials or not an admin'}), 401
+
+# --- Register Blueprint in your main app ---
+# from admin_routes import admin_bp
+# app.register_blueprint(admin_bp)
