@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bank Login</title>
+    <link rel="stylesheet" href="/static/login.css">
+</head>
+<body>
+    <div class="center-box">
+        <div class="login-options">
+            <button id="btn-user" class="active" onclick="showForm('user')">User Login</button>
+            <button id="btn-admin" onclick="showForm('admin')">Admin Login</button>
+            <button id="btn-atm" onclick="showForm('atm')">ATM Login</button>
+            <button id="btn-register" onclick="showForm('register')">Register</button>
+        </div>
+
+        <!-- User Login Form -->
+        <form id="user-login-form" class="login-form active">
+            <h3>User Login</h3>
+            <input type="text" name="username" placeholder="Username" required><br>
+            <input type="password" name="password" placeholder="Password" required><br>
+            <button type="submit">Login</button>
+            <div id="user-login-result"></div>
+        </form>
+
+        <!-- Admin Login Form -->
+        <form id="admin-login-form" class="login-form">
+            <h3>Admin Login</h3>
+            <input type="text" name="username" placeholder="Username" required><br>
+            <input type="password" name="password" placeholder="Password" required><br>
+            <button type="submit">Login</button>
+            <div id="admin-login-result"></div>
+        </form>
+
+        <!-- ATM Login Form -->
+        <form id="atm-login-form" class="login-form">
+            <h3>ATM Login</h3>
+            <input type="text" name="card_number" placeholder="Card Number" required><br>
+            <input type="password" name="pin" placeholder="PIN" required><br>
+            <button type="submit">Login</button>
+            <div id="atm-login-result"></div>
+        </form>
+
+        <!-- Register form-->
+
+        <form id="register-form" class="login-form">
+            <h3>User Registration</h3>
+            <input type="text" name="username" placeholder="Username" required><br>
+            <input type="email" name="email" placeholder="Email" required><br>
+            <input type="password" name="password" placeholder="Password" required><br>
+            <input type="text" name="referral_code" placeholder="referral_code"><br>
+            <button type="submit">Register</button>
+            <div id="register-result"></div>
+        </form>
+
+    </div>
+    <script src="/static/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="/static/user_dashboard.css">
+</head>
+<body>
+    <h2 id="welcome"></h2>
+    <div class="dashboard-header">
+        <span id="welcome"></span>
+        <button id="logout-btn">Logout</button>
+    </div>
+
+    <div>
+        <strong>Referral count:</strong> <span id="referral-count"></span>
+    </div>
+
+    <h3>Your Accounts</h3>
+    <table id="accounts-table" border="1">
+        <thead>
+            <tr>
+                <th>Account ID</th>
+                <th>Type</th>
+                <th>Balance</th>
+                <th>Card_Number</th>
+                <th>Account_Number</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <h3>Create New Account</h3>
+    <form id="create-account-form">
+        Account Type:
+        <select name="account_type" required>
+            <option value="savings">Savings</option>
+            <option value="current">Current</option>
+        </select>
+        <button type="submit">Create Account</button>
+    </form>
+    <div id="create-account-result"></div>
+
+    <div id="delete-modal" style="display:none; border:1px solid #aaa; padding:10px; background:#eee;">
+        <h4>Delete Account</h4>
+        <form id="delete-account-form">
+            <input type="hidden" name="account_id" id="delete-account-id">
+            Card Number: <input type="text" name="card_number" required><br>
+            PIN: <input type="password" name="pin" required><br>
+            <button type="submit">Confirm Delete</button>
+            <button type="button" onclick="closeDeleteModal()">Cancel</button>
+        </form>
+        <div id="delete-account-result"></div>
+    </div>
+
+    <h3>Recent Transactions</h3>
+    <table id="transactions-table" border="1">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Description</th>
+                <th>Timestamp</th>
+                <th>Account ID</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <!-- <div style="text-align: right; margin-bottom: 10px;">
+        <button id="logout-btn">Logout</button>
+    </div> -->
+
+    <div id="dashboard-message"></div>
+
+    <script src="/static/user_dashboard.js"></script>
+</body>
+</html>

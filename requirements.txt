@@ -1,0 +1,12 @@
+flask
+flask-mysqldb
+flask-login
+flask-jwt-extended
+flask-cors
+flask-wtf
+flask-mail
+flask-bcrypt
+flask-restful
+python-dotenv
+pandas
+matplotlib

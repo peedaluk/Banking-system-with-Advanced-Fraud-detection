@@ -1,0 +1,113 @@
+body {
+    background: #e3f0fc;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.atm-container {
+    max-width: 420px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    padding: 28px 22px 18px 22px;
+}
+.atm-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+#atm-logout-btn {
+    background: #c62828;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 14px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.2s;
+}
+#atm-logout-btn:hover {
+    background: #8e0000;
+}
+#atm-message {
+    color: #c00;
+    margin-bottom: 10px;
+    min-height: 1.2em;
+    text-align: center;
+}
+.atm-info-row {
+    margin-bottom: 6px;
+}
+h3 {
+    color: #1976d2;
+    margin-bottom: 8px;
+    margin-top: 20px;
+}
+.atm-form {
+    margin-bottom: 10px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.atm-form input {
+    flex: 1 1 120px;
+    padding: 7px;
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    font-size: 1em;
+}
+.atm-form button {
+    background: #1976d2;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 7px 16px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.2s;
+}
+.atm-form button:hover {
+    background: #0d47a1;
+}
+#withdraw-result, #deposit-result, #transfer-result, #change-pin-result {
+    color: #1976d2;
+    min-height: 1.2em;
+    margin-bottom: 4px;
+    margin-left: 2px;
+}
+.atm-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 18px;
+    background: #fafbfc;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.atm-table th, .atm-table td {
+    padding: 8px 6px;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: left;
+    font-size: 0.98em;
+}
+.atm-table th {
+    background: #e3f0fc;
+    color: #1976d2;
+    font-weight: bold;
+}
+.atm-table tr:last-child td {
+    border-bottom: none;
+}
+@media (max-width: 500px) {
+    .atm-container {
+        max-width: 98vw;
+        padding: 12px 2vw 8px 2vw;
+    }
+    .atm-form input {
+        font-size: 0.98em;
+    }
+    .atm-form button {
+        font-size: 0.98em;
+    }
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ATM Panel</title>
+    <link rel="stylesheet" href="/static/atm_panel.css">
+</head>
+<body>
+    <div class="atm-container">
+        <div class="atm-header">
+            <span>ATM Panel</span>
+            <button id="atm-logout-btn">Logout</button>
+        </div>
+        <div id="atm-message"></div>
+
+        <div id="atm-info" style="display:none;">
+            <div class="atm-info-row">
+                <strong>Card Number:</strong> <span id="card-number"></span>
+            </div>
+            <div class="atm-info-row">
+                <strong>Account Number:</strong> <span id="account-number"></span>
+            </div>
+            <div class="atm-info-row">
+                <strong>Account Type:</strong> <span id="account-type"></span>
+            </div>
+            <div class="atm-info-row">
+                <strong>Balance:</strong> ₹<span id="balance"></span>
+            </div>
+
+            <h3>Withdraw Cash</h3>
+            <form id="withdraw-form" class="atm-form">
+                <input type="number" name="amount" min="100" step="100" placeholder="Amount" required>
+                <button type="submit">Withdraw</button>
+            </form>
+            <div id="withdraw-result"></div>
+
+            <h3>Deposit Cash</h3>
+            <form id="deposit-form" class="atm-form">
+                <input type="number" name="amount" min="100" step="100" placeholder="Amount" required>
+                <button type="submit">Deposit</button>
+            </form>
+            <div id="deposit-result"></div>
+
+            <h3>Transfer Funds</h3>
+            <form id="transfer-form" class="atm-form">
+                <input type="text" name="to_account" placeholder="To Account Number" required>
+                <input type="number" name="amount" min="1" placeholder="Amount" required>
+                <button type="submit">Transfer</button>
+            </form>
+            <div id="transfer-result"></div>
+
+            <h3>Mini Statement</h3>
+            <table id="mini-statement" class="atm-table">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Description</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <h3>Change PIN</h3>
+            <form id="change-pin-form" class="atm-form">
+                <input type="password" name="old_pin" placeholder="Old PIN" required>
+                <input type="password" name="new_pin" pattern="\d{4}" maxlength="4" placeholder="New PIN" required>
+                <button type="submit">Change PIN</button>
+            </form>
+            <div id="change-pin-result"></div>
+        </div>
+    </div>
+    <script src="/static/atm_panel.js"></script>
+</body>
+</html>
