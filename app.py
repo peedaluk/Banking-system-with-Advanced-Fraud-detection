@@ -22,8 +22,7 @@ app.config['MAIL_PASSWORD'] = 'your_email_password'
 app.config['MAIL_DEFAULT_SENDER'] = 'your_email@gmail.com'
 
 
-mysql = MySQL(app)
-mail = Mail(app)
+mysql = MySQL(app) 
 bcrypt = Bcrypt(app)
 
 app.config['MYSQL'] = mysql
