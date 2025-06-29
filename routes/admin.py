@@ -2,6 +2,8 @@ from flask import Blueprint, request, jsonify, session, current_app, render_temp
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
+
+
 # --- Helper function to check admin status ---
 def is_admin():
     return session.get('is_admin', False)
@@ -136,8 +138,8 @@ def admin_login():
     user = cur.fetchone()
     cur.close()
 
-    from werkzeug.security import check_password_hash
-    if user and check_password_hash(user[1], password) and user[2]:
+    bcrypt = current_app.config['BCRYPT']
+    if user and bcrypt.check_password_hash(user[1], password) and user[2]:
         session['user_id'] = user[0]
         session['is_admin'] = True
         return jsonify({'message': 'Admin login successful!'}), 200
