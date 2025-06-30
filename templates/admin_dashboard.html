@@ -1,135 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_dashboard.css') }}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/admin_dashboard.css" >
 </head>
 <body>
-    <div class="dashboard-container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <div class="sidebar-header">
-                <h3><i class="bi bi-shield-lock"></i> Admin Panel</h3>
-            </div>
-            <div class="sidebar-menu">
-                <a href="#" class="active"><i class="bi bi-speedometer2"></i> <span class="menu-text">Dashboard</span></a>
-                <a href="#"><i class="bi bi-people"></i> <span class="menu-text">User Management</span></a>
-                <a href="#"><i class="bi bi-currency-exchange"></i> <span class="menu-text">Transactions</span></a>
-                <a href="#"><i class="bi bi-graph-up"></i> <span class="menu-text">Analytics</span></a>
-                <a href="#"><i class="bi bi-shield-exclamation"></i> <span class="menu-text">Fraud Detection</span></a>
-                <a href="#"><i class="bi bi-gear"></i> <span class="menu-text">Settings</span></a>
-                <a href="#" id="logoutBtn"><i class="bi bi-box-arrow-right"></i> <span class="menu-text">Logout</span></a>
-            </div>
+  <div class="dashboard-container">
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h3><i class="bi bi-shield-lock"></i> Admin Panel</h3>
+      </div>
+      <div class="sidebar-menu">
+        <a href="#" class="active"><i class="bi bi-speedometer2"></i> <span class="menu-text">Dashboard</span></a>
+        <a href="#"><i class="bi bi-people"></i> <span class="menu-text">User Management</span></a>
+        <a href="#"><i class="bi bi-currency-exchange"></i> <span class="menu-text">Transactions</span></a>
+        <a href="#"><i class="bi bi-graph-up"></i> <span class="menu-text">Analytics</span></a>
+        <a href="#"><i class="bi bi-shield-exclamation"></i> <span class="menu-text">Fraud Detection</span></a>
+        <a href="#"><i class="bi bi-gear"></i> <span class="menu-text">Settings</span></a>
+        <a href="#" id="logoutBtn"><i class="bi bi-box-arrow-right"></i> <span class="menu-text">Logout</span></a>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="header d-flex justify-content-between align-items-center">
+        <h4>Admin Dashboard</h4>
+        <div>
+          <button class="btn btn-sm btn-outline-primary position-relative">
+            <i class="bi bi-bell"></i>
+            <span class="notification-badge">3</span>
+          </button>
+          <button class="btn btn-sm btn-outline-secondary ms-2">
+            <i class="bi bi-person-circle"></i> Admin
+          </button>
         </div>
+      </div>
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <div class="header">
-                <h4>Admin Dashboard</h4>
-                <div>
-                    <button class="btn btn-sm btn-outline-primary position-relative">
-                        <i class="bi bi-bell"></i>
-                        <span class="notification-badge">3</span>
-                    </button>
-                    <button class="btn btn-sm btn-outline-secondary ms-2">
-                        <i class="bi bi-person-circle"></i> Admin
-                    </button>
-                </div>
-            </div>
-
-            <!-- Stats Cards -->
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="stat-card text-center">
-                        <i class="bi bi-people"></i>
-                        <div class="card-title">TOTAL USERS</div>
-                        <div id="totalUsers" class="card-value">-</div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="stat-card text-center">
-                        <i class="bi bi-wallet2"></i>
-                        <div class="card-title">TOTAL BALANCE</div>
-                        <div id="totalBalance" class="card-value">-</div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="stat-card text-center">
-                        <i class="bi bi-arrow-left-right"></i>
-                        <div class="card-title">TRANSACTIONS</div>
-                        <div id="totalTransactions" class="card-value">-</div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="stat-card text-center">
-                        <i class="bi bi-shield-exclamation"></i>
-                        <div class="card-title">FRAUD ALERTS</div>
-                        <div id="fraudAlerts" class="card-value">0</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Recent Transactions -->
-            <div class="recent-table mt-4">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h5>Recent Transactions</h5>
-                    <button class="btn btn-sm btn-primary" id="refreshTransactions">
-                        <i class="bi bi-arrow-repeat"></i> Refresh
-                    </button>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Type</th>
-                                <th>Amount</th>
-                                <th>Account</th>
-                                <th>User</th>
-                                <th>Time</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="transactionsTable">
-                            <!-- Transactions will be loaded here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- User Management -->
-            <div class="recent-table mt-4">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h5>User Management</h5>
-                    <div>
-                        <input type="text" class="form-control form-control-sm" placeholder="Search users..." id="userSearch">
-                    </div>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Username</th>
-                                <th>Email</th>
-                                <th>Joined</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="usersTable">
-                            <!-- Users will be loaded here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+      <!-- Stats Cards -->
+      <div class="row mb-4">
+        <div class="col-md-3">
+          <div class="stat-card text-center">
+            <i class="bi bi-people"></i>
+            <div class="card-title">TOTAL USERS</div>
+            <div id="totalUsers" class="card-value">-</div>
+          </div>
         </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ url_for('static', filename='js/admin_dashboard.js') }}"></script>
-</body>
+        <div class="col-md-3">
+          <div class="stat-card text-center">
+            <i class="bi bi-wallet2"></i>
+            <div class="card-title">TOTAL BALANCE</div>
+            <div id="totalBalance" class="card-value">-</div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card text-center">
+            <i class="bi bi-arrow-left-right"></i>
+            <div class="card-title">TRANSACTIONS</div>
+            <div id="totalTransactions" class="card-value">-</div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card text-center">
+            <i class="bi bi-shield-exclamation"></i>
+            <div class="card-title">FRAUD ALERTS</div>
+            <div id="fraudAlerts" class="card-value">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Transactions -->
+      <section class="recent-table mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5>Recent Transactions</h5>
+          <button class="btn btn-sm btn-primary" id="refreshTransactions">
+            <i class="bi bi-arrow-repeat"></i> Refresh
+          </button>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Account</th>
+                <th>User</th>
+                <th>Time</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="transactionsTable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- User Management -->
+      <section class="recent-table mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5>User Management</h5>
+          <input type="text" class="form-control form-control-sm w-auto" placeholder="Search users..." id="userSearch" />
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Joined</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="usersTable"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/admin_dashboard.js"></script>
 </html>
