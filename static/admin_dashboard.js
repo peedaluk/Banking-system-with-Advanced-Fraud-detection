@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
   logoutBtn.addEventListener('click', async () => {
     try {
       const res = await fetch('/admin/logout', { method: 'POST' });
-      if (res.ok) window.location.href = '/login';
+      if (res.ok) window.location.href = '/';
       else alert('Logout failed');
     } catch (err) {
       alert('Logout error');
